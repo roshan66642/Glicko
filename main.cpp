@@ -15,7 +15,7 @@ public:
     vector<Player*> lost, lost2;
     vector<Player*> draw, draw2;
 
-    void Win(Player * A)
+    void Win(Player* A)
     {won.push_back(A);}
 
     void Lose(Player* A)
@@ -29,9 +29,25 @@ public:
         won2=won, lost2=lost, draw2=draw; //Making back-up copy for vector so it can be popped.
         while (!won.empty())
         {
-
+            Player* current=won.back();
+            v+=(G(current)*G(current)*E(this,current)*(1-E(this,current));
+            won.pop_back();
         }
+        while (!lost.empty())
+        {
+            Player* current=lost.back();
+            v+=(G(current)*G(current)*E(this,current)*(1-E(this,current));
+            lost.pop_back();
+        }
+        while (!draw.empty())
+        {
+            Player* current=draw.back();
+            v+=(G(current)*G(current)*E(this,current)*(1-E(this,current));
+            draw.pop_back();
+        }
+        v=1/v;
     }
+
     void ToG2()
     {
         mu=(R-1500)/gconvert;
@@ -51,6 +67,7 @@ public:
         RD=200;
         ToG2();
         rho=0.06;
+        v=0;
     }
 
     Player(string name_in,double R_in,double RD_in)
@@ -59,6 +76,7 @@ public:
         R=R_in;
         RD=RD_in;
         ToG2();
+        v=0;
     }
 };
 
