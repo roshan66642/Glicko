@@ -10,7 +10,7 @@ const long double pi=3.14159265358979;
 const double tolerence=0.000001;
 const double win_val=1.0;
 const double lose_val=0.0;
-const double tie_val=0.5;
+const double draw_val=0.5;
 
 class Player
 {
