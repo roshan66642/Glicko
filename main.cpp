@@ -8,10 +8,30 @@ const long double pi=3.14159265358979;
 class Player
 {
 public:
-    long double mu, phi, rho;
+    long double mu, phi, rho, v;
     double R, RD;
     string name;
+    vector<Player*> won, won2;
+    vector<Player*> lost, lost2;
+    vector<Player*> draw, draw2;
 
+    void Win(Player * A)
+    {won.push_back(A);}
+
+    void Lose(Player* A)
+    {lost.push_back(A);}
+
+    void Tie(Player* A)
+    {draw.push_back(A);}
+
+    void V()
+    {
+        won2=won, lost2=lost, draw2=draw; //Making back-up copy for vector so it can be popped.
+        while (!won.empty())
+        {
+
+        }
+    }
     void ToG2()
     {
         mu=(R-1500)/gconvert;
@@ -42,9 +62,14 @@ public:
     }
 };
 
-int G(Player* in)
+long double G(Player* A)
 {
-    return 1/sqrt(1+3*(in->phi)*(in->phi)/pi/pi)
+    return 1/sqrt(1+3*(A->phi)*(A->phi)/pi/pi);
+}
+
+long double E(Player* A, Player* B)
+{
+    return 1/(1+exp(-1*G(B->phi))*(A->mu-B->mu));
 }
 
 void variance()
