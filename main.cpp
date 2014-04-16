@@ -3,12 +3,19 @@
 
 using namespace std;
 
+const double tau=0.5
+const long double e=2.71828182845904;
 const double gconvert=173.1718;
 const long double pi=3.14159265358979;
+const double tolerence=0.000001;
+const double win_val=1.0;
+const double lose_val=0.0;
+const double tie_val=0.5;
+
 class Player
 {
 public:
-    long double mu, phi, rho, v;
+    long double mu, phi, rho, v, delta;
     double R, RD;
     string name;
     vector<Player*> won, won2;
@@ -27,25 +34,53 @@ public:
     void V()
     {
         won2=won, lost2=lost, draw2=draw; //Making back-up copy for vector so it can be popped.
-        while (!won.empty())
+        while (!won.empty()) //popping the winner vector.
         {
             Player* current=won.back();
-            v+=(G(current)*G(current)*E(this,current)*(1-E(this,current));
+            v+=(powl(G(current),2.0L)*E(this,current)*(1-E(this,current))); //this is sigma-ing every opponent.
             won.pop_back();
         }
         while (!lost.empty())
         {
             Player* current=lost.back();
-            v+=(G(current)*G(current)*E(this,current)*(1-E(this,current));
+            v+=(powl(G(current),2.0L)*E(this,current)*(1-E(this,current)));
             lost.pop_back();
         }
         while (!draw.empty())
         {
             Player* current=draw.back();
-            v+=(G(current)*G(current)*E(this,current)*(1-E(this,current));
+            v+=(powl(G(current),2.0L)*E(this,current)*(1-E(this,current)));
             draw.pop_back();
         }
         v=1/v;
+    }
+
+    void Delta()
+    {
+        while (!won.empty())
+        {
+            Player* current=won.back();
+            delta+=(G(current)*(win_val-E(this,current));
+            won.pop_back();
+        }
+        while (!lost.empty())
+        {
+            Player* current=lost.back();
+            delta+=(G(current)*(lose_val-E(this,current));
+            lost.pop_back();
+        }
+        while (!draw.empty())
+        {
+            Player* current=draw.back();
+            delta+=(G(current)*(tie_val-E(this,current));
+            draw.pop_back();
+        }
+        delta*=v;
+    }
+
+    long double F(long double input)
+    {
+        long double result= powl(e,input)*(powl(delta,2.0L)-powl()
     }
 
     void ToG2()
@@ -90,7 +125,6 @@ long double E(Player* A, Player* B)
     return 1/(1+exp(-1*G(B->phi))*(A->mu-B->mu));
 }
 
-void variance()
 
 int main()
 {
