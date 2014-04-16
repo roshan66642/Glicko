@@ -4,7 +4,7 @@
 using namespace std;
 
 const double gconvert=173.1718;
-
+const long double pi=3.14159265358979;
 class Player
 {
 public:
@@ -13,14 +13,23 @@ public:
     string name;
 
     void ToG2()
+    {
+        mu=(R-1500)/gconvert;
+        phi=RD/gconvert;
+    }
+
+    void ToG()
+    {
+        R=mu*gconvert+1500;
+        RD=phi*gconvert;
+    }
 
     Player(string name_in)
     {
         name=input;
         R=1500;
         RD=200;
-        mu=(R-1500)/gconvert;
-        phi=RD/gconvert;
+        ToG2();
         rho=0.06;
     }
 
@@ -29,14 +38,16 @@ public:
         name=name_in;
         R=R_in;
         RD=RD_in;
-
+        ToG2();
     }
 };
 
-void Glicko2 (float phi, float rou)
+int G(Player* in)
 {
-
+    return 1/sqrt(1+3*(in->phi)*(in->phi)/pi/pi)
 }
+
+void variance()
 
 int main()
 {
